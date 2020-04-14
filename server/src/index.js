@@ -26,7 +26,7 @@ app.use(express.json()); // this is a body parsing middleware
 
 app.get('/', (req, res) => {
     res.json({
-        message: "Hello User",
+        message: "Hello User. This is a t est.",
     });
 });
 
