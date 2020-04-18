@@ -2,6 +2,10 @@ const { Router } = require('express');
 
 const LogEntry = require('../models/LogEntry');
 
+const {
+    API_KEY,
+} = process.env;
+
 // So this was just the beginning, but then we want to create a log that will list all logs
 const router = Router();
 /*
@@ -24,6 +28,10 @@ router.get('/', async(req,res,next) => {
 
 router.post('/', async(req,res,next) => {
     try {
+        if(req.get('X-API-KEY') !== API_KEY){
+            res.status(401);
+            throw new Error('UnAuthorized');
+        }
         const logEntry = new LogEntry(req.body);
         const createdEntry = await logEntry.save(); 
         res.json(createdEntry);
